@@ -1,8 +1,8 @@
 import {GameScene} from "../scenes/GameScene.ts";
-import Container = Phaser.GameObjects.Container;
 import Body = Phaser.Physics.Arcade.Body;
+import { StageObject } from "./StageObject";
 
-export class FlyingObject extends Container {
+export class FlyingObject extends StageObject {
     body: Body;
     public rotationSpeed: number = 0;
 
@@ -28,6 +28,7 @@ export class FlyingObject extends Container {
     }
 
     update(time: number, delta: number) {
+        super.update(time, delta);
         // Position is now updated by the physics engine, so we only need to handle rotation and destruction.
         this.rotation += this.rotationSpeed * (delta / 1000);
         const cam = this.scene.cameras.main;

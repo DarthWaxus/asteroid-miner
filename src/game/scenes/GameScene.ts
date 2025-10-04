@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import { Stage } from '../objects/Stage.ts';
 import { FlyingObject } from '../objects/FlyingObject.ts';
+import {StageObject} from "../objects/StageObject.ts";
 
 export class GameScene extends Scene
 {
@@ -38,7 +39,7 @@ export class GameScene extends Scene
         // The physics engine handles all movement and collisions.
         // We just need to call our custom update method for things like rotation and the off-screen check.
         this.stage.list.forEach((child) => {
-            if (child instanceof FlyingObject) {
+            if (child instanceof StageObject) {
                 child.update(time, delta);
             }
         });

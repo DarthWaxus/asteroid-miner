@@ -2,6 +2,7 @@ import {GameScene} from "../scenes/GameScene.ts";
 import {Asteroid} from "./Asteroid.ts";
 import {FlyingObject} from "./FlyingObject.ts";
 import Container = Phaser.GameObjects.Container;
+import {MainBase} from "./MainBase.ts";
 
 export class Stage extends Container {
     private maxAsteroids: number = 30;
@@ -10,6 +11,11 @@ export class Stage extends Container {
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
         scene.add.existing(this);
+
+        const mainBase = new MainBase(scene);
+        this.add(mainBase);
+        mainBase.x = this.scene.cameras.main.width / 2;
+        mainBase.y = this.scene.cameras.main.height / 2;
 
         this.scene.events.on('object-destroyed', this.onObjectDestroyed, this);
 
