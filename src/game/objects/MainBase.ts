@@ -24,15 +24,15 @@ radius:number = 60;
         const rocket = new Rocket(this.scene);
         this.add(rocket);
 
-        this.setRandomPosition(rocket);
+        this.setRandomPositionOnSurface(rocket);
 
         const player = new Player(scene);
         this.add(player);
 
-        this.setRandomPosition(player);
+        this.setRandomPositionOnSurface(player);
     }
 
-    private setRandomPosition(obj:StageObject){
+    private setRandomPositionOnSurface(obj:StageObject){
         const angle = Phaser.Math.Between(0, 360) * Phaser.Math.DEG_TO_RAD;
 
         const x = Math.cos(angle) * this.radius;
