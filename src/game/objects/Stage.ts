@@ -5,6 +5,7 @@ import Container = Phaser.GameObjects.Container;
 import {MainBase} from "./MainBase.ts";
 
 export class Stage extends Container {
+    public mainBase: MainBase;
     private maxAsteroids: number = 30;
     private asteroidCreationTimer: Phaser.Time.TimerEvent;
 
@@ -12,10 +13,10 @@ export class Stage extends Container {
         super(scene, x, y);
         scene.add.existing(this);
 
-        const mainBase = new MainBase(scene);
-        this.add(mainBase);
-        mainBase.x = this.scene.cameras.main.width / 2;
-        mainBase.y = this.scene.cameras.main.height / 2;
+        this.mainBase = new MainBase(scene);
+        this.add(this.mainBase);
+        this.mainBase.x = this.scene.cameras.main.width / 2;
+        this.mainBase.y = this.scene.cameras.main.height / 2;
 
         this.scene.events.on('object-destroyed', this.onObjectDestroyed, this);
 

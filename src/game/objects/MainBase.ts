@@ -1,12 +1,13 @@
-
 import Graphics = Phaser.GameObjects.Graphics;
-import { Rocket } from './Rocket';
-import { GameScene } from "../scenes/GameScene.ts";
-import { StageObject } from "./StageObject";
-import { Player } from "./Player";
+import {Rocket} from './Rocket';
+import {GameScene} from "../scenes/GameScene.ts";
+import {StageObject} from "./StageObject";
+import {Player} from "./Player";
 
 export class MainBase extends StageObject {
-radius:number = 60;
+    radius: number = 60;
+    public player: Player;
+
     constructor(scene: GameScene) {
         super(scene);
         scene.physics.add.existing(this);
@@ -18,7 +19,7 @@ radius:number = 60;
         body.setCircle(this.radius);
         body.setImmovable(true);
 
-        graphics.fillStyle(0x0000ff, 0.5);
+        graphics.fillStyle(0x0000ff, 1);
         graphics.fillCircle(0, 0, this.radius);
 
         const rocket = new Rocket(this.scene);
@@ -26,13 +27,13 @@ radius:number = 60;
 
         this.setRandomPositionOnSurface(rocket);
 
-        const player = new Player(scene);
-        this.add(player);
+        this.player = new Player(scene);
+        this.add(this.player);
 
-        this.setRandomPositionOnSurface(player);
+        this.setRandomPositionOnSurface(this.player);
     }
 
-    private setRandomPositionOnSurface(obj:StageObject){
+    private setRandomPositionOnSurface(obj: StageObject) {
         const angle = Phaser.Math.Between(0, 360) * Phaser.Math.DEG_TO_RAD;
 
         const x = Math.cos(angle) * this.radius;

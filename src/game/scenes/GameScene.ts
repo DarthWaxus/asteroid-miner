@@ -2,6 +2,8 @@ import { Scene } from 'phaser';
 import { Stage } from '../objects/Stage.ts';
 import { FlyingObject } from '../objects/FlyingObject.ts';
 import {StageObject} from "../objects/StageObject.ts";
+import {Asteroid} from "../objects/Asteroid.ts";
+import {Player} from "../objects/Player.ts";
 
 export class GameScene extends Scene
 {
@@ -33,6 +35,21 @@ export class GameScene extends Scene
         // Now, tell the physics engine to handle collisions between all objects in the stage.
         // The objects will bounce off each other automatically.
         this.physics.add.collider(this.stage.list, this.stage.list);
+
+        this.input.on('pointerdown', () => {
+            this.stage.mainBase.player.undock();
+        });
+
+        this.physics.add.collider(
+            this.stage.mainBase.player,
+            this.stage.list.filter(obj => obj instanceof Asteroid),
+            (player, asteroid) => {
+                const p = player as Player;
+                if (!p.isDocked) {
+                    p.dockTo(asteroid as Asteroid);
+                }
+            }
+        );
     }
 
     update(time: number, delta: number) {
